@@ -16,8 +16,7 @@ Anyone can create their own token protocol by forking the Dereva repository and 
 ```
   API_KEY=
   API_URL=
-  BLOCKCHAIN_DB_NAME=
-  BLOCKCHAIN_MONGO_URI=
+  DATA_URI=
   HOST=
   PORT=
   TOKEN_ADDRESS=

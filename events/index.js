@@ -11,13 +11,13 @@
   Dependencies
   */
 
-  const userEvents = require('./events.user');
+  const serviceEvents = require('./events.service');
 
   /*
   Exports
   */
 
   module.exports = {
-    userEvents
+    serviceEvents
   };
 })();

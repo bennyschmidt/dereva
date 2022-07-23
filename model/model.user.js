@@ -28,7 +28,7 @@
   */
 
   module.exports = () => ({
-    get users() {
+    get users () {
       return users;
     },
 
@@ -71,19 +71,22 @@
     },
 
     removeUser: ({ token, id }) => {
-      const user = users[id];
+      // TODO validation
+      if (token) {
+        const user = users[id];
 
-      if (!user?.isOnline) {
-        return false;
+        if (!user?.isOnline) {
+          return false;
+        }
+
+        users[user.id] = {
+          ...user,
+
+          isOnline: false
+        };
+
+        return true;
       }
-
-      users[user.id] = {
-        ...user,
-
-        isOnline: false
-      };
-
-      return true;
     }
   });
 })();

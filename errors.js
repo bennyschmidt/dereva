@@ -1,26 +1,14 @@
 module.exports = {
-  SERVER_ERROR: {
-    error: {
-      code: 500,
-      message: 'Server error.'
-    }
-  },
   BAD_REQUEST: {
     error: {
       code: 400,
       message: 'Bad request.'
     }
   },
-  INVALID_EMAIL_ERROR: {
+  UNAUTHORIZED: {
     error: {
-      code: 400,
-      message: 'Invalid email address.'
-    }
-  },
-  INVALID_PASSWORD_ERROR: {
-    error: {
-      code: 400,
-      message: 'Invalid password.'
+      code: 401,
+      message: 'Unauthorized.'
     }
   },
   INVALID_AUTH_ERROR: {
@@ -62,7 +50,13 @@ module.exports = {
   UNPROCESSABLE_REQUEST: {
     error: {
       code: 422,
-      message: 'User not found.'
+      message: 'Malformed userData or request payload.'
+    }
+  },
+  SERVER_ERROR: {
+    error: {
+      code: 500,
+      message: 'Server error.'
     }
   }
 };

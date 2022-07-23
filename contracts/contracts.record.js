@@ -5,7 +5,9 @@
  *
  */
 
-module.exports = ({ drv, peers, userEvents }) => {
+const SUCCESS_CODE = 200;
+
+module.exports = ({ drv, peers, serviceEvents }) => {
   const Record = async ({
     token,
     sender,
@@ -17,7 +19,7 @@ module.exports = ({ drv, peers, userEvents }) => {
     isDrv
   }) => {
     if (isDrv) {
-      const transactionResult = await userEvents.onServicePost({
+      const transactionResult = await serviceEvents.onServicePost({
         service: drv,
         serviceName: '/',
         method: 'transaction',
@@ -31,20 +33,20 @@ module.exports = ({ drv, peers, userEvents }) => {
         }
       });
 
-      if (!transactionResult || transactionResult.status !== 200) {
+      if (!transactionResult || transactionResult.status !== SUCCESS_CODE) {
         return false;
       }
 
       return transactionResult;
     }
 
-    const priceResult = await userEvents.onServiceGet({
+    const priceResult = await serviceEvents.onServiceGet({
       service: drv,
       serviceName: '/',
       method: 'price'
     });
 
-    if (!priceResult || priceResult.status !== 200) {
+    if (!priceResult || priceResult.status !== SUCCESS_CODE) {
       return false;
     }
 

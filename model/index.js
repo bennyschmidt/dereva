@@ -6,9 +6,9 @@
  */
 
 (() => {
-  const userApi = require('./api.user');
+  const userModel = require('./model.user');
 
   module.exports = {
-    userApi
+    userModel
   };
 })();

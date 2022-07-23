@@ -1,18 +1,18 @@
 {
   "name": "dereva",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "scripts": {
     "start": "node index",
     "test": "node src/tests"
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "diamond-search-and-store": "^0.2.0",
     "dotenv": "^8.2.0",
-    "drv-core": "^1.1.2",
+    "drv-core": "^1.2.4",
     "express": "^4.17.1",
     "fern-client": "^1.0.4",
     "identity-client": "^1.0.2",
-    "mongodb": "^3.6.5",
     "node-fetch": "^2.6.1",
     "node-fetch-parser": "^1.0.1",
     "node-service-client": "^1.0.3",

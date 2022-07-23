@@ -1,7 +1,7 @@
 /*
  *
  * Service:Events
- * User
+ * Service
  *
  */
 

@@ -14,10 +14,8 @@
   */
 
   const { http } = require('node-service-client');
-  const drv = require('drv-core');
-
   const identity = require('identity-client');
-  const fern = require('fern-client');
+  const drv = require('drv-core');
 
   const {
     SERVER_ERROR,
@@ -30,7 +28,7 @@
   } = require('./errors');
 
   const {
-    HOST,
+    API_URL,
     TOKEN_ADDRESS,
     TOKEN_NAME,
     TOKEN_LOGO_URL,
@@ -40,8 +38,6 @@
   /*
   Backend
   */
-
-  fern.setURL(HOST);
 
   const userModel = require('./model/model.user')();
   const serviceEvents = require('./events/events.service')();
@@ -59,41 +55,39 @@
   */
 
   const getDrvTokenBalance = async ({ address }) => {
-    const transactionsResult = await serviceEvents.onServiceGet({
-      service: drv,
-      serviceName: 'dereva',
-      method: 'transactions'
-    });
+    const transactionsResult = await fetch(`${API_URL}/transactions`);
 
-    if (!transactionsResult?.success) {
-      return -1;
+    if (transactionsResult && transactionsResult.status === 200) {
+      const transactionsResponse = await transactionsResult.json();
+
+      if (!transactionsResponse?.success) return;
+
+      const transactions = transactionsResponse.body;
+
+      let tokenDebit = transactions
+        .filter(block => (
+          typeof (block.drvValue) === 'number' &&
+          block.senderAddress === address
+        ))
+        .map(({ drvValue }) => drvValue * TOKEN_DENOMINATION);
+
+      if (tokenDebit?.length > 1) {
+        tokenDebit = tokenDebit.reduce((a, b) => a + b);
+      }
+
+      let tokenCredit = transactions
+        .filter(block => (
+          typeof (block.drvValue) === 'number' &&
+          block.recipientAddress === address
+        ))
+        .map(({ drvValue }) => drvValue * TOKEN_DENOMINATION);
+
+      if (tokenCredit?.length > 1) {
+        tokenCredit = tokenCredit.reduce((a, b) => a + b);
+      }
+
+      return tokenCredit - tokenDebit;
     }
-
-    const transactions = transactionsResult.body;
-
-    let tokenDebit = transactions
-      .filter(block => (
-        typeof (block.drvValue) === 'number' &&
-        block.senderAddress === address
-      ))
-      .map(({ drvValue }) => drvValue * TOKEN_DENOMINATION);
-
-    if (tokenDebit?.length > 1) {
-      tokenDebit = tokenDebit.reduce((a, b) => a + b);
-    }
-
-    let tokenCredit = transactions
-      .filter(block => (
-        typeof (block.drvValue) === 'number' &&
-        block.recipientAddress === address
-      ))
-      .map(({ drvValue }) => drvValue * TOKEN_DENOMINATION);
-
-    if (tokenCredit?.length > 1) {
-      tokenCredit = tokenCredit.reduce((a, b) => a + b);
-    }
-
-    return tokenCredit - tokenDebit;
   };
 
   /*
@@ -173,7 +167,7 @@
 
         const priceResult = await serviceEvents.onServiceGet({
           service: drv,
-          serviceName: 'drv',
+          serviceName: '/',
           method: 'price'
         });
 
@@ -227,7 +221,6 @@
           success: true
         };
       },
-      cards: fern.cards,
       transaction: async ({
         token,
         username,
@@ -289,19 +282,6 @@
               return UNAVAILABLE_TOKEN;
             }
           }
-
-          const paymentResult = await fern.transaction({
-            username: senderResponse.username,
-            token,
-            recipient: recipientResponse.username,
-            usdValue,
-            cardNumber,
-            squareToken
-          });
-
-          if (!paymentResult?.success) {
-            return SERVER_ERROR;
-          }
         }
 
         const transactionResult = isFungible
@@ -358,9 +338,7 @@
         };
       }
     },
-    PUT: {
-      card: fern.save
-    },
+    PUT: {},
     DELETE: {}
   });
 })();

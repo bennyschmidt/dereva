@@ -1,9 +1,10 @@
 {
   "name": "dereva",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "scripts": {
     "start": "node index",
-    "test": "node src/tests"
+    "test": "node tests",
+    "lint": "eslint ./ --fix"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -11,11 +12,15 @@
     "dotenv": "^8.2.0",
     "drv-core": "^1.2.4",
     "express": "^4.17.1",
-    "fern-client": "^1.0.4",
     "identity-client": "^1.0.2",
     "node-fetch": "^2.6.1",
     "node-fetch-parser": "^1.0.1",
     "node-service-client": "^1.0.3",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.18.2",
+    "@babel/plugin-proposal-class-properties": "^7.17.12",
+    "@babel/preset-env": "^7.18.2"
   }
 }

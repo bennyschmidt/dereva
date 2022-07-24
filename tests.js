@@ -1,31 +1,28 @@
-(() => {
+/*
+Dependencies
+*/
 
-  /*
-  Dependencies
-  */
+const fetch = require('node-fetch');
 
-  const fetch = require('node-fetch');
+const { HOST } = require('./constants');
 
-  const { URL } = require('../../constants');
+const runTests = async () => {
+  let data;
 
-  const runTests = async () => {
-    let data;
+  try {
+    data = await fetch(`${HOST}/auth`);
 
-    try {
-      data = await fetch(`${URL}/dereva/auth`);
+    const response = await data.json();
 
-      const response = await data.json();
+    console.log(response);
 
-      console.log(response);
+    /*
+     * TODO Tests
+     */
 
-      /*
-       * TODO Tests
-       */
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  runTests();
-})();
+runTests();

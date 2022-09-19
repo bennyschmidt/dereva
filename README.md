@@ -54,6 +54,3 @@ or 3B. For content protocols, you shouldn't have a front-end component built int
 - [Contracts](https://github.com/bennyschmidt/drv-core/blob/master/README.md#contracts)
 - [Validations](https://github.com/bennyschmidt/drv-core/blob/master/README.md#validations)
 - [Enforcements](https://github.com/bennyschmidt/drv-core/blob/master/README.md#enforcements)
-- [Redundancy](https://github.com/bennyschmidt/drv-core/blob/master/README.md#redundancy)
-- [Trading](https://github.com/bennyschmidt/drv-core/blob/master/README.md#trading)
-- [Anonymous Tokens](https://github.com/bennyschmidt/drv-core/blob/master/README.md#anonymous-tokens)

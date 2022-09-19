@@ -1,10 +1,26 @@
-## Dereva
+# Dereva
 
-Dereva is a deployable digital ledger that operates on the [Decentralized Record of Value](https://github.com/exactchange/drv-core) protocol. Any user with a minimum account balance of 0.0000000001 Dereva may define and alias (name) their new token to sell or freely distribute to their users in any amount and denomination they choose, limited to their account balance. Derevas are bound to, and can only be spent in whichever economy they were disbursed. The protocol also supports non-fungible records like documents and user content.
+[Dereva](https://github.com/bennyschmidt/dereva) is a deployable digital currency that also extends `drv-core` with native content types and file storage enabling robust non-fungible records. For fungible systems, it allows any user with quantifiable Dereva (a minimum account balance of 0.0000000001) to define and alias their own token to sell or freely distribute in any amount and denomination they choose, limited to their account balance.
 
 ## Decentralization
 
-Anyone can create their own token protocol by forking the Dereva repository and serving it to the web with their new token name and configuration. The codebase installs a local copy of [drv-core](https://www.npmjs.com/package/drv-core), so that every instance of Dereva runs its own instance of the blockchain.
+Anyone can create their own token, or their own content protocol, by forking the [Dereva](https://github.com/bennyschmidt/dereva) repository and serving it to the web with their new token name and configuration. The codebase installs a local copy of `drv-core`, so that every instance of Dereva runs its own blockchain instance.
+
+Transactions are broadcasted to other nodes in the peer network, who run their own validation logic to determine if it should be entered into their blockchain instance or not. Because everyone installs the same blockchain, the validation logic should be identical. But if a host tampers with their local blockchain code, they may yield different validation results than other nodes. Enforcing a protocol should vary depending on how strict it is, but it usually includes satisfying unit tests in order to be included in peer lists.
+
+Anyone can determine the validity of a transaction against a certain confidence threshold by counting at any time how many instances have validated it versus how many instances are running. As more peers run a transaction, confidence is built, and upon a certain threshold determined by the user a transaction may be deemed valid.
+
+When performing a basic balance inquiry or when transferring Dereva to another user, like any other request the values are determined functionally - that is, they are calculated at the time it's needed to be across a number of peer instances until the provided confidence threshold is met.
+
+## Contracts
+
+Contracts are agreements between participants in a transaction that are specified in the request by their string name (e.g. `{ contract: "nonFungibleRecord" }`). Currently there are 2 kinds of contracts:
+
+**Record**
+
+**Non-Fungible Record**
+
+Contracts can encompass just one, or many transactions, and even establish long-term payment schedules involving various layers of validation and user interaction.
 
 ## Usage
 
@@ -14,8 +30,6 @@ Anyone can create their own token protocol by forking the Dereva repository and 
 
 
 ```
-  API_KEY=
-  API_URL=
   DATA_URI=
   HOST=
   PORT=
@@ -25,7 +39,6 @@ Anyone can create their own token protocol by forking the Dereva repository and 
   TOKEN_DENOMINATION=
 ```
 
-- `API_KEY` & `API_URL`: Only required if you plan on using the built-in [Identity Client](https://github.com/exactchange/identity-client).
 - `DATA_URI`: Your [DSS Database](https://github.com/exactchange/dss) URI.
 - `HOST`: The address at which you host this app.
 - `PORT`: The port you're serving it over.
@@ -33,14 +46,14 @@ Anyone can create their own token protocol by forking the Dereva repository and 
 
 3A. When your service is ready, deploy it to the web and begin selling your new token. Replenish your own token supply by purchasing [Dereva](https://exactchange.network/dereva/?app=shop). 
 
-or 3B. For content protocols, you shouldn't have a front-end component built into the protocol, and there is no token to sell, you just need to keep your peer list up-to-date. If you want to monetize content in your protocol, that should happen in a separate app, and the protocol should be maintained as a standalone, open-source framework that others might extend.
+or 3B. For content protocols, you shouldn't have a front-end component built into the protocol, and there is no token associated with it as in the case of NFT, you just need to keep your peer list up-to-date. If you want to monetize content in your protocol, that should happen in a separate app, and the protocol should be maintained as a standalone, open-source framework that others might extend.
 
 ## Topics
 
-- [Decentralization](https://github.com/exactchange/drv-core/blob/master/README.md#decentralization)
-- [Contracts](https://github.com/exactchange/drv-core/blob/master/README.md#contracts)
-- [Validations](https://github.com/exactchange/drv-core/blob/master/README.md#validations)
-- [Enforcements](https://github.com/exactchange/drv-core/blob/master/README.md#enforcements)
-- [Redundancy](https://github.com/exactchange/drv-core/blob/master/README.md#redundancy)
-- [Trading](https://github.com/exactchange/drv-core/blob/master/README.md#trading)
-- [Anonymous Tokens](https://github.com/exactchange/drv-core/blob/master/README.md#anonymous-tokens)
+- [Decentralization](https://github.com/bennyschmidt/drv-core/blob/master/README.md#decentralization)
+- [Contracts](https://github.com/bennyschmidt/drv-core/blob/master/README.md#contracts)
+- [Validations](https://github.com/bennyschmidt/drv-core/blob/master/README.md#validations)
+- [Enforcements](https://github.com/bennyschmidt/drv-core/blob/master/README.md#enforcements)
+- [Redundancy](https://github.com/bennyschmidt/drv-core/blob/master/README.md#redundancy)
+- [Trading](https://github.com/bennyschmidt/drv-core/blob/master/README.md#trading)
+- [Anonymous Tokens](https://github.com/bennyschmidt/drv-core/blob/master/README.md#anonymous-tokens)

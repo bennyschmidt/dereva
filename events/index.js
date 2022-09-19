@@ -1,23 +1,5 @@
-/*
- *
- * Service:Events
- * (default)
- *
- */
+const serviceEvents = require('./service');
 
-(() => {
-
-  /*
-  Dependencies
-  */
-
-  const serviceEvents = require('./events.service');
-
-  /*
-  Exports
-  */
-
-  module.exports = {
-    serviceEvents
-  };
-})();
+module.exports = {
+  serviceEvents
+};

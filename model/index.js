@@ -1,14 +1,5 @@
-/*
- *
- * Service:API
- * (default)
- *
- */
+const userModel = require('./user');
 
-(() => {
-  const userModel = require('./model.user');
-
-  module.exports = {
-    userModel
-  };
-})();
+module.exports = {
+  userModel
+};

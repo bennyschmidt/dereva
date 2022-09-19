@@ -42,9 +42,9 @@
   const userModel = require('./model/model.user')();
   const serviceEvents = require('./events/events.service')();
   const peers = require('./peers');
-  const { generateUUID } = require('./utilities');
+  const { generateUUID } = require('cryptography-utilities');
 
-  const { Record, NonFungibleRecord } = require('./contracts')({
+  const { DRV100, DRV200 } = require('./contracts')({
     drv,
     peers,
     serviceEvents
@@ -230,7 +230,7 @@
         drvValue,
         cardNumber = false,
         squareToken = false,
-        contract = 'record'
+        contract = 'DRV100'
       }) => {
         if (!username || !token) return;
 
@@ -260,7 +260,7 @@
         }
 
         const isDrv = !squareToken && !cardNumber;
-        const isFungible = contract === 'record';
+        const isFungible = contract === 'DRV100';
 
         if (isDrv) {
           if (isFungible) {
@@ -285,7 +285,7 @@
         }
 
         const transactionResult = isFungible
-          ? await Record({
+          ? await DRV100({
             token,
             sender: senderResponse,
             recipient: recipientResponse,
@@ -294,7 +294,7 @@
             drvValue,
             isDrv
           })
-          : await NonFungibleRecord({
+          : await DRV200({
             token,
             sender: senderResponse,
             recipient: recipientResponse,

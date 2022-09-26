@@ -1,6 +1,6 @@
 # Dereva
 
-[Dereva](https://github.com/bennyschmidt/dereva) is a deployable digital currency that also extends `drv-core` with native content types and file storage enabling robust non-fungible records. For fungible systems, it allows any user with quantifiable Dereva (a minimum account balance of 0.0000000001) to define and alias their own token to sell or freely distribute in any amount and denomination they choose, limited to their account balance.
+[Dereva](https://github.com/bennyschmidt/dereva) is a deployable digital currency that extends [`drv-core`](https://github.com/bennyschmidt/drv-core) with native content types and file storage enabling robust non-fungible records. For fungible systems, it allows any user with quantifiable Dereva (a minimum account balance of 0.0000000001) to define and alias their own token to sell or freely distribute in any amount and denomination they choose, limited to their account balance.
 
 ## Decentralization
 

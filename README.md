@@ -44,9 +44,13 @@ Contracts can encompass just one, or many transactions, and even establish long-
 - `PORT`: The port you're serving it over.
 - `TOKEN_ADDRESS`, `TOKEN_NAME`, `TOKEN_LOGO_URL`, & `TOKEN_DENOMINATION`: This is the protocol info your peer instance will broadcast to the network. If your protocol instance is not for fungible token systems, you can just use `1` for the `TOKEN_DENOMINATION`.
 
-3A. When your service is ready, deploy it to the web and begin selling your new token. Replenish your own token supply by purchasing [Dereva](https://exactchange.network/dereva/?app=shop). 
+3A. When your service is ready, add it to your existing infrastructure and begin selling your new token. Replenish your own token supply by purchasing [Dereva](https://exactchange.network/dereva/?app=shop).
 
 or 3B. For content protocols, you shouldn't have a front-end component built into the protocol, and there is no token associated with it as in the case of NFT, you just need to keep your peer list up-to-date. If you want to monetize content in your protocol, that should happen in a separate app, and the protocol should be maintained as a standalone, open-source framework that others might extend.
+
+## Node.js Boilerplate
+
+You can also use this [Node.js boilerplate](https://github.com/bennyschmidt/node-dereva-boilerplate). Just clone the repo, add your `.env` and deploy.
 
 ## Topics
 

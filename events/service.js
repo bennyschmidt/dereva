@@ -1,3 +1,8 @@
+/*
+ * Microservice request wrappers
+ * for communicating with other services
+ */
+
 module.exports = () => ({
   onServiceGet: async ({ service, serviceName, method, body }) => (
     service.onHttpGet(

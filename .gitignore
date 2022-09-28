@@ -5,7 +5,7 @@
 /ssl
 
 # db
-diamond/data
+.dss
 
 # misc
 .DS_Store

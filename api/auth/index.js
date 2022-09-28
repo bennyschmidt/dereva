@@ -1,6 +1,10 @@
 /* eslint-disable no-magic-numbers */
 
-const identity = require('identity-client');
+const {
+  create,
+  read
+} = require('identity-client');
+
 const drv = require('drv-core');
 
 const serviceEvents = require('../../events/service');
@@ -21,7 +25,7 @@ module.exports = async ({
   let result, userData;
 
   if (token) {
-    result = await identity.read({
+    result = await read({
       username,
       token
     });
@@ -32,7 +36,7 @@ module.exports = async ({
 
     userData = result?.appData?.dereva || {};
   } else {
-    result = await identity.create({
+    result = await create({
       username,
       password,
       appSlug: 'dereva'
@@ -45,7 +49,7 @@ module.exports = async ({
     // eslint-disable-next-line no-param-reassign
     token = result.token;
 
-    result = await identity.read({
+    result = await read({
       username,
       token
     });

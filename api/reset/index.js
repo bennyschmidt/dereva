@@ -1,9 +1,9 @@
-const identity = require('identity-client');
+const { resetPassword } = require('identity-client');
 
 const { BAD_REQUEST } = require('../../errors');
 
 module.exports = async ({ username }) => {
-  const reset = await identity.resetPassword({
+  const reset = await resetPassword({
     username,
     appSlug: 'dereva'
   });

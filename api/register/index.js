@@ -1,10 +1,10 @@
-const identity = require('identity-client');
+const { register } = require('identity-client');
 const { generateUUID } = require('cryptography-utilities');
 
 const { BAD_REQUEST } = require('../../errors');
 
 module.exports = async ({ username }) => {
-  const signup = await identity.register({
+  const signup = await register({
     username,
     userData: {
       address: generateUUID()

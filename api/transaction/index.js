@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers */
 
-const identity = require('identity-client');
+const { read } = require('identity-client');
 
 const {
   SERVER_ERROR,
@@ -29,8 +29,15 @@ module.exports = async ({
 }) => {
   if (!username || !token) return;
 
-  const senderResult = await identity.read({ username, token });
-  const recipientResult = await identity.read({ username: recipient, token });
+  const senderResult = await read({
+    username,
+    token
+  });
+
+  const recipientResult = await read({
+    username: recipient,
+    token
+  });
 
   let senderResponse;
 
@@ -102,7 +109,7 @@ module.exports = async ({
     return SERVER_ERROR;
   }
 
-  user = await identity.read({
+  user = await read({
     username,
     token
   });

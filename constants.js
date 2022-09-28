@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const {
-  API_URL,
   DATA_URI,
   HOST,
   PORT,
@@ -14,7 +13,6 @@ const {
 } = process.env;
 
 module.exports = {
-  API_URL,
   DATA_URI,
   HOST,
   PORT,

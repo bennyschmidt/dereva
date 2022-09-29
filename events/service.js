@@ -53,6 +53,7 @@ module.exports = {
         send: body => ({
           status: 200,
           success: true,
+
           ...body
         })
       }

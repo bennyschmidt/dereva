@@ -25,7 +25,7 @@ module.exports = http({
       serviceName: '/',
       method: 'price'
     }),
-    transactions: async () => await serviceEvents.onServiceGet({
+    transactions: async () => serviceEvents.onServiceGet({
       service: drv,
       serviceName: '/',
       method: 'transactions'

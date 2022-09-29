@@ -39,7 +39,7 @@ Contracts can encompass just one, or many transactions, and even establish long-
   TOKEN_DENOMINATION=
 ```
 
-- `DATA_URI`: Your [DSS Database](https://github.com/exactchange/dss) URI (or `whichever/path/you/want/transactions/saved`).
+- `DATA_URI`: Your [DSS Database](https://github.com/exactchange/dss) URI (just use the project directory `.`, or `path/to/transaction/cache`, see step 4).
 - `HOST`: The address at which you host this app.
 - `PORT`: The port you're serving it over.
 - `TOKEN_ADDRESS`, `TOKEN_NAME`, `TOKEN_LOGO_URL`, & `TOKEN_DENOMINATION`: This is the protocol info your peer instance will broadcast to the network. If your protocol instance is not purposed for fungible token systems, you can just use `1` for the `TOKEN_DENOMINATION`.
@@ -48,9 +48,11 @@ Contracts can encompass just one, or many transactions, and even establish long-
 
 or 3B. For content protocols, you shouldn't have a front-end component built into the protocol. Content hosting & distribution should be collectively accomplished through peer-to-peer activity, with central platforms and even hubs being avoided. There is no token associated with DRV content like there is with NFT, you just need to keep your peer list up-to-date. If you want to monetize content in your protocol, that should happen off-chain, and the protocol should be maintained as a standalone, open-source framework that others might extend. Only in fungible token systems (via [`DRV100`](https://github.com/bennyschmidt/DRV100)) is there a need to record USD transfers on-chain.
 
+4. For blockchain cache, create a `path/to/transaction/cache/.dss/data/transactions.json` file populated with just `{}`. Keep the `.dss` file in your `.gitignore` to prevent unnecessarily committing cache.
+
 ## Node.js Boilerplate
 
-You can also use this [Node.js boilerplate](https://github.com/bennyschmidt/node-dereva-boilerplate). Just clone the repo, add your `.env` and deploy.
+Instead of the above 4 steps, you can simply clone this [Node.js boilerplate](https://github.com/bennyschmidt/node-dereva-boilerplate). Just add your `.env` file, a `.dss` directory, and deploy.
 
 ## Topics
 

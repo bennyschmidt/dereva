@@ -1,22 +1,24 @@
 /* eslint-disable no-magic-numbers */
 
 const { read } = require('identity-client');
+const fern = require('fern-client');
 
 const {
   SERVER_ERROR,
   USER_NOT_FOUND_ERROR,
   INSUFFICIENT_FUNDS,
   UNAVAILABLE_TOKEN
-} = require('../../errors');
+} = require('../../../../errors');
 
 const {
   DRV100,
   DRV200
-} = require('../../contracts');
+} = require('dereva/contracts');
 
 const getDrvTokenBalance = require('./get-drv-token-balance');
 
 module.exports = async ({
+  apiKey = false,
   token,
   username,
   recipient,
@@ -27,16 +29,18 @@ module.exports = async ({
   squareToken = false,
   contract = 'DRV100'
 }) => {
-  if (!username || !token) return;
+  if (!username || (!token && !apiKey)) return;
 
   const senderResult = await read({
     username,
-    token
+    token,
+    apiKey
   });
 
   const recipientResult = await read({
     username: recipient,
-    token
+    token,
+    apiKey
   });
 
   let senderResponse;
@@ -84,11 +88,23 @@ module.exports = async ({
         return UNAVAILABLE_TOKEN;
       }
     }
+
+    const paymentResult = await fern.transaction({
+      username: senderResponse.username,
+      token,
+      recipient: recipientResponse.username,
+      usdValue,
+      cardNumber,
+      squareToken
+    });
+
+    if (!paymentResult?.success) {
+      return SERVER_ERROR;
+    }
   }
 
   const transactionResult = isFungible
     ? await DRV100({
-      token,
       sender: senderResponse,
       recipient: recipientResponse,
       recipientAddress,
@@ -97,7 +113,6 @@ module.exports = async ({
       isDrv
     })
     : await DRV200({
-      token,
       sender: senderResponse,
       recipient: recipientResponse,
       recipientAddress,
@@ -111,7 +126,8 @@ module.exports = async ({
 
   user = await read({
     username,
-    token
+    token,
+    apiKey
   });
 
   if (isFungible) {
@@ -128,7 +144,7 @@ module.exports = async ({
 
   return {
     success: true,
-    user: {
+    user: user && {
       id: user.id,
       username: user.username,
       token: user.token,

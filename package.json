@@ -1,6 +1,6 @@
 {
   "name": "dereva",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "scripts": {
     "start": "node index",
     "test": "node tests",
@@ -11,7 +11,7 @@
     "dotenv": "^8.2.0",
     "drv-core": "^1.3.9",
     "drv100": "^0.0.4",
-    "drv200": "^0.0.6",
+    "drv200": "^0.0.7",
     "identity-client": "^1.0.2",
     "node-fetch": "^2.6.1",
     "node-service-library": "^1.0.7"

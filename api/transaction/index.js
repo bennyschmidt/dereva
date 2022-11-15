@@ -1,19 +1,18 @@
 /* eslint-disable no-magic-numbers */
 
 const { read } = require('identity-client');
-const fern = require('fern-client');
 
 const {
   SERVER_ERROR,
   USER_NOT_FOUND_ERROR,
   INSUFFICIENT_FUNDS,
   UNAVAILABLE_TOKEN
-} = require('../../../../errors');
+} = require('../../errors');
 
 const {
   DRV100,
   DRV200
-} = require('dereva/contracts');
+} = require('../../contracts');
 
 const getDrvTokenBalance = require('./get-drv-token-balance');
 
@@ -87,19 +86,6 @@ module.exports = async ({
       if (recipientTokenDrvBalance < drvValue) {
         return UNAVAILABLE_TOKEN;
       }
-    }
-
-    const paymentResult = await fern.transaction({
-      username: senderResponse.username,
-      token,
-      recipient: recipientResponse.username,
-      usdValue,
-      cardNumber,
-      squareToken
-    });
-
-    if (!paymentResult?.success) {
-      return SERVER_ERROR;
     }
   }
 

@@ -1,4 +1,5 @@
 const auth = require('./auth');
+const file = require('./file');
 const info = require('./info');
 const price = require('./price');
 const register = require('./register');
@@ -13,6 +14,7 @@ const transactions = require('./transactions');
 
 module.exports = {
   auth,
+  file,
   info,
   price,
   register,

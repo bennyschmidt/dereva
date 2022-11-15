@@ -2,6 +2,7 @@ const { http } = require('node-service-library');
 
 const {
   auth,
+  file,
   info,
   price,
   register,
@@ -18,6 +19,7 @@ module.exports = http({
   },
   POST: {
     auth,
+    file,
     register,
     reset,
     transaction

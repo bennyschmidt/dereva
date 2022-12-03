@@ -9,10 +9,7 @@ const {
   UNAVAILABLE_TOKEN
 } = require('../../errors');
 
-const {
-  DRV100,
-  DRV200
-} = require('../../contracts');
+const Contracts = require('../../contracts');
 
 const getDrvTokenBalance = require('./get-drv-token-balance');
 
@@ -90,7 +87,7 @@ module.exports = async ({
   }
 
   const transactionResult = isFungible
-    ? await DRV100({
+    ? await Contracts.DRV100({
       sender: senderResponse,
       recipient: recipientResponse,
       recipientAddress,
@@ -98,7 +95,7 @@ module.exports = async ({
       drvValue,
       isDrv
     })
-    : await DRV200({
+    : await Contracts[contract]({
       sender: senderResponse,
       recipient: recipientResponse,
       recipientAddress,

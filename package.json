@@ -1,6 +1,6 @@
 {
   "name": "dereva",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "scripts": {
     "start": "node index",
     "test": "node tests",
@@ -9,9 +9,10 @@
   "dependencies": {
     "cryptography-utilities": "^0.0.2",
     "dotenv": "^8.2.0",
-    "drv-core": "^1.4.4",
+    "drv-core": "^1.4.5",
     "drv100": "^0.0.4",
     "drv200": "^0.0.9",
+    "drv201": "^0.0.1",
     "identity-client": "^1.0.2",
     "node-fetch": "^2.6.1",
     "node-service-library": "^1.0.7"

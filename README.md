@@ -1,20 +1,20 @@
 # Dereva
 
-[Dereva](https://github.com/bennyschmidt/dereva) is a Node.js [service](https://github.com/bennyschmidt/node-service-library) that extends [`drv-core`](https://github.com/bennyschmidt/drv-core) with native content types and file storage enabling robust non-fungible records. For fungible systems, it allows any user with quantifiable Dereva (a minimum account balance of 0.0000000001) to define and alias their own token to sell or freely distribute in any amount and denomination they choose, limited to their account balance.
+[Dereva](https://github.com/bennyschmidt/dereva) is a deployable Node.js [service](https://github.com/bennyschmidt/node-service-library) that extends [`drv-core`](https://github.com/bennyschmidt/drv-core) with native content types and file storage, enabling robust non-fungible records in addition to fungible transactions. You can install & use it as a library, or deploy this code as a REST API. For fungible systems, it allows any user with quantifiable Dereva to alias & denominate their own token to sell or freely distribute.
 
 ## Decentralization
 
 Anyone can create their own token, or their own content protocol, by forking the [Dereva](https://github.com/bennyschmidt/dereva) repository and serving it to the web with their new token name and configuration. The codebase installs a local copy of `drv-core`, so that every instance of Dereva runs its own blockchain instance. 
 
-Transactions are broadcasted to other nodes in the peer network, who run their own validation logic to determine if it should be entered into their blockchain instance or not. Because everyone installs the same blockchain, the validation logic should be identical. But if a host tampers with their local blockchain code, they may yield different validation results than other nodes. Enforcing a protocol should vary depending on how strict it is, but it usually includes satisfying unit tests in order to be included in peer lists.
+`drv-core` broadcasts transactions to other nodes in the peer network, who run their own validation logic to determine if it should be entered into their blockchain instance or not. Because everyone installs the same blockchain, the validation logic should be identical. But if a host tampered with their local blockchain code, they may yield different validation results than other nodes. Implementing a protocol layer on top of `drv-core` (like Dereva) is thus usually necessary, and enforcing it should vary depending on how strict it needs to be, but it usually includes satisfying unit tests in order to be retained in peer lists.
 
 Anyone can determine the validity of a transaction against a certain confidence threshold by counting how many instances have validated it versus the total being queried. As more peers run a transaction, confidence is built, and upon a certain threshold determined by the user a transaction may be deemed valid.
 
-When performing a basic balance inquiry or when transferring Dereva to another user, like any other request the values are determined functionally - that is, they are calculated at the time it's needed to be across a number of peer instances until the provided confidence threshold is met.
+When performing a basic balance inquiry or when transferring Dereva to another user, like any other request the values are determined functionally - in other words, calculated at the time it's needed to be across a number of peer instances until the provided confidence threshold is met.
 
 ## Contracts
 
-Contracts are agreements between participants in a transaction that are specified in the request by their string name (e.g. `{ contract: "DRV100" }`). Currently there are 3 kinds of contracts:
+Contracts are agreements between participants in a transaction that help enforce the protocol. The contract type is specified in the request by it's string name (e.g. `{ contract: "DRV100" }`). Currently there are 3 kinds of contracts:
 
 **[DRV100](https://github.com/bennyschmidt/DRV100) (Record)**
 
@@ -39,20 +39,16 @@ Contracts are agreements between participants in a transaction that are specifie
   TOKEN_DENOMINATION=
 ```
 
-- `DATA_URI`: Your [DSS Database](https://github.com/exactchange/dss) URI (just use the project directory `.`, or `path/to/transaction/cache`, see step 4).
+- `DATA_URI`: Your [DSS Database](https://github.com/exactchange/dss) URI (just use the project directory `.`, or `path/to/storage`, see step 3).
 - `HOST`: The address at which you host this app.
 - `PORT`: The port you're serving it over.
 - `TOKEN_ADDRESS`, `TOKEN_NAME`, `TOKEN_LOGO_URL`, & `TOKEN_DENOMINATION`: This is the protocol info your peer instance will broadcast to the network. If your protocol instance is not purposed for fungible token systems, you can just use `1` for the `TOKEN_DENOMINATION`.
 
-3A. For token systems, when your service is ready, create a front-end that connects to your API, and begin selling your new token. Replenish your own token supply by purchasing [Dereva](https://exactchange.network/dereva/?app=convert). If you change the denomination after tokens have been disbursed to users, their holdings are updated to reflect that change, there is no dilutive effect.
-
-or 3B. For content protocols, you shouldn't have a front-end component built into the protocol. Content hosting & distribution should be collectively accomplished through peer-to-peer activity, with central platforms and even hubs being avoided. If you want to monetize content in your protocol, that should happen off-chain, and the protocol implementation should be maintained as a standalone, open-source framework that others might extend. Only in fungible token systems (via [`DRV100`](https://github.com/bennyschmidt/DRV100)) is there a need to record USD transfers on-chain.
-
-4. For blockchain cache, create a `path/to/transaction/cache/.dss/data/transactions.json` file populated with just `{}`. Keep the `.dss` file in your `.gitignore` to prevent unnecessarily committing cache.
+3. For blockchain file storage, create a `path/to/storage/.dss/data/transactions.json` file populated with just `{}`. Keep the `.dss` file in your `.gitignore` to prevent committing data files to git.
 
 ## Node.js Boilerplate
 
-Instead of the above 4 steps, you can simply clone this [Node.js boilerplate](https://github.com/bennyschmidt/node-dereva-boilerplate). Just add your `.env` file, a `.dss` directory, and deploy.
+Instead of the above 3 steps, you can simply clone this [Node.js boilerplate](https://github.com/bennyschmidt/node-dereva-boilerplate). Just add your `.env` file, a `.dss` directory, and deploy.
 
 ## Topics
 

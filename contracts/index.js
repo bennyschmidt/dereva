@@ -1,6 +1,7 @@
 const drv = require('drv-core');
 
-const serviceEvents = require('../events/service');
+const serviceGet = require('../service.get');
+const servicePost = require('../service.get');
 const peers = require('../peers');
 
 /*
@@ -56,7 +57,10 @@ module.exports = Object.assign(
       require(contract)({
         drv,
         peers,
-        serviceEvents
+        serviceEvents: {
+          onServiceGet: serviceGet,
+          onServicePost: servicePost
+        }
       })
     )
   }))

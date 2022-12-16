@@ -1,6 +1,6 @@
 {
   "name": "dereva",
-  "version": "1.4.8",
+  "version": "1.4.9",
   "scripts": {
     "start": "node index",
     "test": "node tests",
@@ -8,8 +8,9 @@
   },
   "dependencies": {
     "cryptography-utilities": "^0.0.2",
+    "diamond-search-and-store": "^0.3.0",
     "dotenv": "^8.2.0",
-    "drv-core": "^1.4.5",
+    "drv-core": "^1.4.6",
     "drv100": "^0.0.4",
     "drv200": "^0.0.9",
     "drv201": "^0.0.2",

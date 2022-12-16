@@ -4,10 +4,10 @@ const drv = require('drv-core');
 
 const { TOKEN_DENOMINATION } = require('../../constants');
 
-const serviceEvents = require('../../events/service');
+const serviceGet = require('../../service.get');
 
 module.exports = async ({ address }) => {
-  const transactionsResult = await serviceEvents.onServiceGet({
+  const transactionsResult = await serviceGet({
     service: drv,
     serviceName: 'dereva',
     method: 'transactions'

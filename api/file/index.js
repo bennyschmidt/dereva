@@ -1,9 +1,9 @@
 const drv = require('drv-core');
 
-const serviceEvents = require('../../events/service');
+const servicePost = require('../../service.post');
 
 module.exports = async ({ mediaAddress, mediaType }) => (
-  serviceEvents.onServicePost({
+  servicePost({
     service: drv,
     serviceName: 'fs',
     method: 'search',

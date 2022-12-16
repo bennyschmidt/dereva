@@ -7,7 +7,7 @@ const {
 
 const drv = require('drv-core');
 
-const serviceEvents = require('../../events/service');
+const serviceGet = require('../../service.get');
 
 const {
   SERVER_ERROR,
@@ -68,7 +68,7 @@ module.exports = async ({
     return UNPROCESSABLE_REQUEST;
   }
 
-  const priceResult = await serviceEvents.onServiceGet({
+  const priceResult = await serviceGet({
     service: drv,
     serviceName: '/',
     method: 'price'

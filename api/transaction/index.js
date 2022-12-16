@@ -137,7 +137,6 @@ module.exports = async ({
       }
     },
     price: transactionResult.price,
-    price24hAgo: transactionResult.price24hAgo,
-    marketCap: transactionResult.marketCap
+    price24hAgo: transactionResult.price24hAgo
   };
 };

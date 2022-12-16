@@ -1,9 +1,9 @@
 const drv = require('drv-core');
 
-const serviceEvents = require('../../events/service');
+const serviceGet = require('../../service.get');
 
 module.exports = async () => (
-  serviceEvents.onServiceGet({
+  serviceGet({
     service: drv,
     serviceName: '/',
     method: 'price'

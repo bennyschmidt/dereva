@@ -1,7 +1,7 @@
 const drv = require('drv-core');
 
 const serviceGet = require('../service.get');
-const servicePost = require('../service.get');
+const servicePost = require('../service.post');
 const peers = require('../peers');
 
 /*

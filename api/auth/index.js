@@ -1,95 +1,83 @@
 /* eslint-disable no-magic-numbers */
 
-const {
-  create,
-  read
-} = require('identity-client');
-
 const drv = require('drv-core');
+const { generateUUID } = require('cryptography-utilities');
 
+const { HOST } = require('../../constants');
+const { BAD_REQUEST, USER_NOT_FOUND_ERROR } = require('../../errors');
+const { sendEmail } = require('../../mailer');
 const serviceGet = require('../../service.get');
+const getDrvUser = require('../transaction/get-drv-user');
 
-const {
-  SERVER_ERROR,
-  INVALID_TOKEN_ERROR,
-  UNPROCESSABLE_REQUEST
-} = require('../../errors');
-
-module.exports = async ({
-  username,
-  password = false,
+module.exports = ({ getSession, addSession }) => async ({
+  address,
   token = ''
 }) => {
-  if (!username) return;
+  if (!address) {
+    return BAD_REQUEST;
+  }
 
-  let result, userData;
+  const session = getSession({ token });
 
-  if (token) {
-    result = await read({
-      username,
-      token
-    });
+  if (session?.address === address) {
+    const result = await getDrvUser({ address });
 
-    if (!result?.username) {
-      return INVALID_TOKEN_ERROR;
+    const { username } = result;
+
+    if (!username) {
+      return USER_NOT_FOUND_ERROR;
     }
 
-    userData = result?.appData?.dereva || {};
-  } else {
-    result = await create({
+    const user = {
+      token,
       username,
-      password,
-      appSlug: 'dereva'
+      userData: {
+        username,
+        address: result.unique
+      }
+    };
+
+    const priceResult = await serviceGet({
+      service: drv,
+      serviceName: '/',
+      method: 'price'
     });
 
-    if (!result?.token) {
+    if (!priceResult || priceResult.status !== 200) {
       return SERVER_ERROR;
     }
 
-    // eslint-disable-next-line no-param-reassign
-    token = result.token;
-
-    result = await read({
-      username,
-      token
-    });
-
-    userData = result?.appData?.dereva || {};
+    return {
+      success: true,
+      user,
+      price: priceResult.price,
+      price24hAgo: priceResult.price24hAgo,
+    };
   }
 
-  const user = {
+  const { email } = await getDrvUser({ address });
+
+  if (!email) {
+    return USER_NOT_FOUND_ERROR;
+  }
+
+  // eslint-disable-next-line no-param-reassign
+  token = generateUUID();
+
+  addSession({
     token,
-    id: username,
-    username,
-    userData
-  };
-
-  if (!user.userData?.address) {
-    return UNPROCESSABLE_REQUEST;
-  }
-
-  const priceResult = await serviceGet({
-    service: drv,
-    serviceName: '/',
-    method: 'price'
+    address
   });
 
-  if (!priceResult || priceResult.status !== 200) {
-    return SERVER_ERROR;
-  }
+  await sendEmail({
+    to: email,
+    subject: 'Confirm your login on Dereva.',
+    // eslint-disable-next-line max-len
+    html: `<a href="${HOST}/?address=${address}&token=${token}" target="_blank">Authorize Login</a><br />If you do not authorize this login, <strong>do not</strong> click the link.`
+  });
 
   return {
     success: true,
-    user: {
-      id: user.id,
-      username: user.username,
-      token: user.token,
-      isOnline: user.isOnline,
-      userData: {
-        address: user.userData.address
-      }
-    },
-    price: priceResult.price,
-    price24hAgo: priceResult.price24hAgo,
+    message: 'Authorization sent (check your email).'
   };
 };

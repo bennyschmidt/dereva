@@ -2,11 +2,12 @@ const { http } = require('node-service-library');
 
 const {
   auth,
+  authConfirm,
   file,
   info,
   price,
   register,
-  reset,
+  registerConfirm,
   transaction,
   transactions
 } = require('./api');
@@ -19,9 +20,10 @@ module.exports = http({
   },
   POST: {
     auth,
+    'confirm-auth': authConfirm,
     file,
     register,
-    reset,
+    'confirm-register': registerConfirm,
     transaction
   },
   PUT: {},

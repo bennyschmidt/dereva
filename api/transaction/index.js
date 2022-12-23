@@ -1,103 +1,61 @@
 /* eslint-disable no-magic-numbers */
 
-const { read } = require('identity-client');
-
 const {
   SERVER_ERROR,
   USER_NOT_FOUND_ERROR,
-  INSUFFICIENT_FUNDS,
-  UNAVAILABLE_TOKEN
+  INSUFFICIENT_FUNDS
 } = require('../../errors');
 
 const Contracts = require('../../contracts');
 
 const getDrvTokenBalance = require('./get-drv-token-balance');
+const getDrvUser = require('./get-drv-user');
 
 module.exports = async ({
   apiKey = false,
   token,
-  username,
-  recipient,
+  senderAddress,
   recipientAddress,
   usdValue,
   drvValue,
-  cardNumber = false,
-  squareToken = false,
   contract = 'DRV100'
 }) => {
-  if (!username || (!token && !apiKey)) return;
+  if (!senderAddress || (!token && !apiKey)) return;
 
-  const senderResult = await read({
-    username,
-    token,
-    apiKey
+  const senderResult = await getDrvUser({
+    address: senderAddress
   });
 
-  const recipientResult = await read({
-    username: recipient,
-    token,
-    apiKey
+  const recipientResult = await getDrvUser({
+    address: recipientAddress
   });
 
-  let senderResponse;
-
-  if (senderResult?.username) {
-    senderResponse = {
-      username: senderResult.username,
-      userData: senderResult?.appData?.dereva
-    };
-  }
-
-  let recipientResponse;
-
-  if (recipientResult?.username) {
-    recipientResponse = {
-      username: recipientResult.username,
-      userData: recipientResult?.appData?.dereva
-    };
-  }
-
-  if (!senderResponse?.username || !recipientResponse?.username) {
+  if (!senderResult?.username || !recipientResult?.username) {
     return USER_NOT_FOUND_ERROR;
   }
 
-  const isDrv = !squareToken && !cardNumber;
   const isFungible = contract === 'DRV100';
 
-  if (isDrv) {
-    if (isFungible) {
-      const senderTokenDrvBalance = await getDrvTokenBalance({
-        address: senderResponse.userData.address
-      });
+  if (isFungible) {
+    const senderTokenDrvBalance = await getDrvTokenBalance({
+      address: senderAddress
+    });
 
-      if (senderTokenDrvBalance < drvValue) {
-        return INSUFFICIENT_FUNDS;
-      }
-    }
-  } else {
-    if (isFungible) {
-      const recipientTokenDrvBalance = await getDrvTokenBalance({
-        address: recipientAddress
-      });
-
-      if (recipientTokenDrvBalance < drvValue) {
-        return UNAVAILABLE_TOKEN;
-      }
+    if (senderTokenDrvBalance < drvValue) {
+      return INSUFFICIENT_FUNDS;
     }
   }
 
   const transactionResult = isFungible
     ? await Contracts.DRV100({
-      sender: senderResponse,
-      recipient: recipientResponse,
+      senderAddress,
       recipientAddress,
       usdValue,
       drvValue,
-      isDrv
+      isDrv: true
     })
     : await Contracts[contract]({
-      sender: senderResponse,
-      recipient: recipientResponse,
+      senderAddress,
       recipientAddress,
       usdValue,
       drvValue
@@ -107,31 +65,27 @@ module.exports = async ({
     return SERVER_ERROR;
   }
 
-  user = await read({
-    username,
-    token,
-    apiKey
+  const user = await getDrvUser({
+    address: senderAddress
   });
 
   if (isFungible) {
     console.log(
       // eslint-disable-next-line max-len
-      `<Dereva> ${senderResponse.username} sent ${recipientResponse.username} ${isDrv ? `${drvValue.toFixed(2)} DRV` : `${usdValue.toFixed(2)} USD`}.`
+      `<Dereva> ${senderAddress} sent ${drvValue.toFixed(5)} DRV to ${recipientAddress}.`
     );
   } else {
     console.log(
       // eslint-disable-next-line max-len
-      `<Dereva> ${senderResponse.username} transferred a record to ${senderResponse.username === recipientResponse.username ? 'the blockchain' : recipientResponse.username}.`
+      `<Dereva> ${senderAddress} transferred a record to ${senderAddress === recipientAddress ? 'the blockchain' : recipientAddress}.`
     );
   }
 
   return {
     success: true,
     user: user && {
-      id: user.id,
       username: user.username,
-      token: user.token,
-      isOnline: user.isOnline,
+      token,
       userData: {
         address: user.userData.address
       }

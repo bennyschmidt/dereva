@@ -1,22 +1,29 @@
-const { register } = require('identity-client');
+/* eslint-disable no-magic-numbers */
+
 const { generateUUID } = require('cryptography-utilities');
 
-const { BAD_REQUEST } = require('../../errors');
+const { HOST } = require('../../constants');
+const { sendEmail } = require('../../mailer');
 
-module.exports = async ({ username }) => {
-  const signup = await register({
-    username,
-    userData: {
-      address: generateUUID()
-    },
-    appSlug: 'dereva'
+module.exports = ({ addRegistrant }) => async ({ username }) => {
+  const otp = generateUUID();
+  const address = generateUUID();
+
+  addRegistrant({
+    otp,
+    address,
+    username
   });
 
-  if (!signup?.success) {
-    return BAD_REQUEST;
-  }
+  await sendEmail({
+    to: username,
+    subject: 'Confirm your registration on Dereva.',
+    // eslint-disable-next-line max-len
+    html: `Public address: <strong>${address}</strong><br /><a href="${HOST}/?register=${otp}" target="_blank">Authorize Registration</a><br />If you do not authorize this registration, <strong>do not</strong> click the link.`
+  });
 
   return {
-    success: true
+    success: true,
+    message: 'Authorization sent (check your email).'
   };
 };

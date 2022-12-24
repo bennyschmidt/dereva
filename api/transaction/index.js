@@ -81,9 +81,9 @@ module.exports = async ({
     success: true,
     user: {
       token,
-      username,
+      username: user.username,
       userData: {
-        username,
+        username: user.username,
         address: senderAddress
       }
     },

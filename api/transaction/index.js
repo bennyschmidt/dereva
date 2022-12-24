@@ -13,24 +13,24 @@ const getDrvUser = require('./get-drv-user');
 
 module.exports = async ({
   apiKey = false,
-  token,
-  senderAddress,
-  recipientAddress,
-  usdValue,
-  drvValue,
+  token = '',
+  senderAddress = '',
+  recipientAddress = '',
+  usdValue = 0,
+  drvValue = 0,
   contract = 'DRV100'
 }) => {
-  if (!senderAddress || (!token && !apiKey)) return;
+  const isValid = (
+    (senderAddress?.length === 36) && (token || apiKey)
+  );
 
-  const senderResult = await getDrvUser({
+  if (!isValid) return;
+
+  const user = await getDrvUser({
     address: senderAddress
   });
 
-  const recipientResult = await getDrvUser({
-    address: recipientAddress
-  });
-
-  if (!senderResult?.username || !recipientResult?.username) {
+  if (!user?.username) {
     return USER_NOT_FOUND_ERROR;
   }
 
@@ -65,10 +65,6 @@ module.exports = async ({
     return SERVER_ERROR;
   }
 
-  const user = await getDrvUser({
-    address: senderAddress
-  });
-
   if (isFungible) {
     console.log(
       // eslint-disable-next-line max-len
@@ -83,11 +79,12 @@ module.exports = async ({
 
   return {
     success: true,
-    user: user && {
-      username: user.username,
+    user: {
       token,
+      username,
       userData: {
-        address: user.userData.address
+        username,
+        address: senderAddress
       }
     },
     price: transactionResult.price,

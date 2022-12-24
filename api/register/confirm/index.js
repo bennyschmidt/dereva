@@ -38,11 +38,11 @@ module.exports = ({ getRegistrant, removeRegistrant }) => async ({ otp }) => {
     method: 'transaction',
     body: {
       apiKey: DEREVA_API_KEY,
-      senderAddress: address,
+      senderAddress: DEREVA_ADDRESS,
       recipientAddress: address,
       usdValue: 0,
       drvValue: `data:drv/${payload.type.toLowerCase()};json,${JSON.stringify(payload)}`,
-      contract
+      contract: 'DRV201'
     }
   });
 

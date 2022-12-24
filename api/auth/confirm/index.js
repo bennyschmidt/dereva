@@ -6,6 +6,7 @@ const serviceGet = require('../../../service.get');
 const getDrvUser = require('../../transaction/get-drv-user');
 
 const {
+  BAD_REQUEST,
   SERVER_ERROR,
   UNAUTHORIZED,
   USER_NOT_FOUND_ERROR
@@ -15,7 +16,9 @@ module.exports = ({ getSession }) => async ({
   address,
   token = ''
 }) => {
-  if (!address || !token) return;
+  if (!address || !token) {
+    return BAD_REQUEST;
+  }
 
   const session = getSession({ token });
 

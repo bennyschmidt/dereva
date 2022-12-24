@@ -1,3 +1,3 @@
 module.exports = {
-  "ff0b0fe7-1d46-764a-2b82-9751147cbdd8": "https://10.0.0.183:8443/dereva"
+  "158fe325-a136-95ff-d92c-d297d50f4e1f": "https://10.0.0.183:8443/dereva"
 };

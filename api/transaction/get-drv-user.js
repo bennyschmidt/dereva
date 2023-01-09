@@ -22,13 +22,13 @@ module.exports = async ({ address }) => {
 
   await Promise.all(
     transactions
-      .filter(({ contract }) => contract === 'DRV201')
+      .filter(({ contract }) => contract === 'DRV200')
       .map(async transaction => {
-        if (!transaction.drvValue.match(/drv\/user/)) return;
+        if (!transaction.drvValue.match(/drv\/alias/)) return;
 
         const mediaAddress = transaction.drvValue
-          .replace('::magnet:?xt=urn:drv/user:', '')
-          .replace('&dn=User', '');
+          .replace('::magnet:?xt=urn:drv/alias:', '')
+          .replace('&dn=Alias', '');
 
         const response = await servicePost({
           service: drv,
@@ -44,7 +44,7 @@ module.exports = async ({ address }) => {
 
         const body = JSON.parse(response.data);
 
-        if (body.unique === address) {
+        if (body.name === address) {
           result = body;
         }
       })

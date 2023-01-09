@@ -19,21 +19,23 @@ module.exports = ({ getSession, addSession }) => async ({
 
   const session = getSession({ token });
 
-  if (session?.address === address) {
-    const result = await getDrvUser({ address });
-
-    const { username } = result;
-
-    if (!username) {
-      return USER_NOT_FOUND_ERROR;
+  const {
+    auth: {
+      email
     }
+  } = await getDrvUser({ address });
 
+  if (!email?.value) {
+    return USER_NOT_FOUND_ERROR;
+  }
+
+  if (session?.address === address) {
     const user = {
       token,
-      username,
+      username: email.value,
       userData: {
-        username,
-        address: result.unique
+        username: email.value,
+        address: result.name
       }
     };
 
@@ -53,12 +55,6 @@ module.exports = ({ getSession, addSession }) => async ({
       price: priceResult.price,
       price24hAgo: priceResult.price24hAgo,
     };
-  }
-
-  const { email } = await getDrvUser({ address });
-
-  if (!email) {
-    return USER_NOT_FOUND_ERROR;
   }
 
   // eslint-disable-next-line no-param-reassign

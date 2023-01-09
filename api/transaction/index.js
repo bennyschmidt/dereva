@@ -30,7 +30,7 @@ module.exports = async ({
     address: senderAddress
   });
 
-  if (!user?.username) {
+  if (!user?.name) {
     return USER_NOT_FOUND_ERROR;
   }
 
@@ -81,9 +81,9 @@ module.exports = async ({
     success: true,
     user: {
       token,
-      username: user.username,
+      username: user.name,
       userData: {
-        username: user.username,
+        username: user.email.value,
         address: senderAddress
       }
     },

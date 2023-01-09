@@ -39,7 +39,7 @@ module.exports = ({ getSession }) => async ({
     username,
     userData: {
       username,
-      address: result.unique
+      address: result.name
     }
   };
 

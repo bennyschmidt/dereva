@@ -26,17 +26,10 @@ const DEFAULT_CONTRACTS = [
   'drv200',
 
   /*
-   * DRV201
-   * Non-Fungible Record (unique)
-   */
-
-  'drv201',
-
-  /*
    * Include other contracts here:
    *
-   * 'drv000',
-   * 'drv000A',
+   * 'drv300',
+   * 'drv300A',
    * '...'
    */
 ];

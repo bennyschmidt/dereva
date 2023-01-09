@@ -21,15 +21,13 @@ module.exports = ({ getRegistrant, removeRegistrant }) => async ({ otp }) => {
   }
 
   const payload = {
-    type: 'User',
-    username,
-    email: username,
-    unique: address,
-    date: new Date()
-      .toISOString()
-      .replace('T', ' ')
-      .substr(0, 19)
-      .replace(/-/g, '/')
+    type: 'Alias',
+    name: address,
+    auth: {
+      type: 'email',
+      value: username
+    },
+    datetime: new Date().toISOString()
   };
 
   const signup = await servicePost({
@@ -42,7 +40,7 @@ module.exports = ({ getRegistrant, removeRegistrant }) => async ({ otp }) => {
       recipientAddress: address,
       usdValue: 0,
       drvValue: `data:drv/${payload.type.toLowerCase()};json,${JSON.stringify(payload)}`,
-      contract: 'DRV201'
+      contract: 'DRV200'
     }
   });
 

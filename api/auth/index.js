@@ -20,6 +20,8 @@ module.exports = ({ getSession, addSession }) => async ({
   const session = getSession({ token });
 
   const {
+    name,
+
     auth: {
       email
     }
@@ -35,7 +37,7 @@ module.exports = ({ getSession, addSession }) => async ({
       username: email.value,
       userData: {
         username: email.value,
-        address: result.name
+        address: name
       }
     };
 

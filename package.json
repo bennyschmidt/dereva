@@ -1,6 +1,6 @@
 {
   "name": "dereva",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "scripts": {
     "start": "node index",
     "test": "node tests",
@@ -10,8 +10,8 @@
     "cryptography-utilities": "^0.0.2",
     "dotenv": "^8.2.0",
     "drv-core": "^1.5.0",
-    "drv100": "^0.0.6",
-    "drv200": "^0.1.3",
+    "drv100": "^0.0.7",
+    "drv200": "^0.1.5",
     "node-fetch": "^2.6.1",
     "node-service-library": "^1.0.7",
     "nodemailer": "^6.8.0"

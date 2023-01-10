@@ -26,20 +26,26 @@ module.exports = ({ getSession }) => async ({
     return UNAUTHORIZED;
   }
 
-  const result = await getDrvUser({ address });
+  const {
+    name,
 
-  const { username } = result;
+    auth: {
+      email
+    }
+  } = await getDrvUser({ address });
 
-  if (!username) {
+  const emailAddress = email?.value;
+
+  if (!emailAddress) {
     return USER_NOT_FOUND_ERROR;
   }
 
   const user = {
     token,
-    username,
+    username: name,
     userData: {
-      username,
-      address: result.name
+      username: emailAddress,
+      address: name
     }
   };
 

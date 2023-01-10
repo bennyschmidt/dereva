@@ -27,16 +27,18 @@ module.exports = ({ getSession, addSession }) => async ({
     }
   } = await getDrvUser({ address });
 
-  if (!email?.value) {
+  const emailAddress = email?.value;
+
+  if (!emailAddress) {
     return USER_NOT_FOUND_ERROR;
   }
 
   if (session?.address === address) {
     const user = {
       token,
-      username: email.value,
+      username: name,
       userData: {
-        username: email.value,
+        username: emailAddress,
         address: name
       }
     };
@@ -68,7 +70,7 @@ module.exports = ({ getSession, addSession }) => async ({
   });
 
   await sendEmail({
-    to: email,
+    to: emailAddress,
     subject: 'Confirm your login on Dereva.',
     // eslint-disable-next-line max-len
     html: `<a href="${HOST}/?address=${address}&token=${token}" target="_blank">Authorize Login</a><br />If you do not authorize this login, <strong>do not</strong> click the link.`

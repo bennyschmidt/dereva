@@ -3,7 +3,8 @@
 const {
   SERVER_ERROR,
   USER_NOT_FOUND_ERROR,
-  INSUFFICIENT_FUNDS
+  INSUFFICIENT_FUNDS,
+  UNAUTHORIZED
 } = require('../../errors');
 
 const Contracts = require('../../contracts');
@@ -20,11 +21,9 @@ module.exports = async ({
   drvValue = 0,
   contract = 'DRV100'
 }) => {
-  const isValid = (
-    (senderAddress?.length === 36) && (token || apiKey)
-  );
-
-  if (!isValid) return;
+  if (!token && !apiKey) {
+    return UNAUTHORIZED;
+  }
 
   const user = await getDrvUser({
     address: senderAddress
@@ -83,7 +82,7 @@ module.exports = async ({
       token,
       username: user.name,
       userData: {
-        username: user.email.value,
+        username: user.auth.value,
         address: senderAddress
       }
     },

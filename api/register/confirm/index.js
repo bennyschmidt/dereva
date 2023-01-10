@@ -27,7 +27,7 @@ module.exports = ({ getRegistrant, removeRegistrant }) => async ({ otp }) => {
       type: 'email',
       value: username
     },
-    datetime: new Date().toISOString()
+    date: new Date().toISOString()
   };
 
   const signup = await servicePost({

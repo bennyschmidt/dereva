@@ -44,7 +44,7 @@ module.exports = async ({ address }) => {
 
         const body = JSON.parse(response.data);
 
-        if (body.name === address) {
+        if (body.address === address) {
           result = body;
         }
       })

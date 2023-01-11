@@ -9,7 +9,7 @@ const serviceGet = require('../../service.get');
 module.exports = async ({ address }) => {
   const transactionsResult = await serviceGet({
     service: drv,
-    serviceName: 'dereva',
+    serviceName: '/',
     method: 'transactions'
   });
 
@@ -17,13 +17,15 @@ module.exports = async ({ address }) => {
     return -1;
   }
 
-  const transactions = transactionsResult.body;
+  const transactions = transactionsResult
+    .body
+    .body
+    .filter(({ contract }) =>
+      contract === 'DRV100'
+    );
 
   let tokenDebit = transactions
-    .filter(block => (
-      typeof (block.drvValue) === 'number' &&
-      block.senderAddress === address
-    ))
+    .filter(block => block.senderAddress === address)
     .map(({ drvValue }) => drvValue * TOKEN_DENOMINATION);
 
   if (tokenDebit?.length > 1) {
@@ -31,10 +33,7 @@ module.exports = async ({ address }) => {
   }
 
   let tokenCredit = transactions
-    .filter(block => (
-      typeof (block.drvValue) === 'number' &&
-      block.recipientAddress === address
-    ))
+    .filter(block => block.recipientAddress === address)
     .map(({ drvValue }) => drvValue * TOKEN_DENOMINATION);
 
   if (tokenCredit?.length > 1) {

@@ -19,21 +19,21 @@ module.exports = ({ getSession, addSession }) => async ({
 
   const session = getSession({ token });
 
-  const { auth, name } = await getDrvUser({ address });
+  const drvUser = await getDrvUser({ address });
 
-  const emailAddress = auth?.value;
+  const emailAddress = drvUser?.auth?.value;
 
   if (!emailAddress) {
     return USER_NOT_FOUND_ERROR;
   }
 
-  if (session?.address === address) {
+  if (session?.address === drvUser.address) {
     const user = {
       token,
-      username: name,
+      username: drvUser.name,
       userData: {
-        username: emailAddress,
-        address: name
+        username: drvUser.name,
+        address: drvUser.address
       }
     };
 

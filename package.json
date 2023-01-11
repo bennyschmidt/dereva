@@ -1,6 +1,6 @@
 {
   "name": "dereva",
-  "version": "1.6.9",
+  "version": "1.7.0",
   "scripts": {
     "start": "node index",
     "test": "node tests",

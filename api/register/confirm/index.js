@@ -22,7 +22,8 @@ module.exports = ({ getRegistrant, removeRegistrant }) => async ({ otp }) => {
 
   const payload = {
     type: 'Alias',
-    name: address,
+    address,
+    name: username,
     auth: {
       type: 'email',
       value: username

@@ -11,7 +11,7 @@
     "dotenv": "^8.2.0",
     "drv-core": "^1.5.0",
     "drv100": "^0.0.7",
-    "drv200": "^0.1.6",
+    "drv200": "^0.1.7",
     "node-fetch": "^2.6.1",
     "node-service-library": "^1.0.7",
     "nodemailer": "^6.8.0"

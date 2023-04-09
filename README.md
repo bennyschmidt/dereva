@@ -10,6 +10,12 @@ Anyone can create their own token, or their own content protocol, by forking the
 
 ![drv-dereva-diagram](https://user-images.githubusercontent.com/45407493/230754827-106459d9-e230-419d-807a-34f5eacd729f.png)
 
+> Diagram: Extend the protocol by forking & hosting a Dereva instance.
+
+![reverse-dereva-diagram](https://user-images.githubusercontent.com/45407493/230782044-2593ef8f-5a9b-46ac-abaa-929127082cee.png)
+
+> Diagram: Fork & extend content protocols to enable new decentralized application experiences.
+
 ## Consensus
 
 Anyone can determine the validity of a transaction against a certain confidence threshold by counting how many instances have validated it versus the total being queried. As more peers run a transaction, confidence is built, and upon a certain threshold determined by the user a transaction may be deemed valid.

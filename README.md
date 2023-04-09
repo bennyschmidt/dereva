@@ -1,6 +1,6 @@
 # Dereva
 
-[Dereva](https://github.com/bennyschmidt/dereva) is a deployable Node.js [service](https://github.com/bennyschmidt/node-service-library) that extends [`drv-core`](https://github.com/bennyschmidt/drv-core) with native content types and file storage, enabling robust non-fungible records in addition to fungible transactions. You can install & use it as a library, or deploy this code as a REST API. For fungible systems, it allows any user with quantifiable Dereva to alias & denominate their own token to sell or freely distribute.
+[Dereva](https://github.com/bennyschmidt/dereva) is a deployable Node.js [service](https://github.com/bennyschmidt/node-service-library) that extends basic ledger functionality with native content types and file storage, enabling robust non-fungible records in addition to fungible transactions. You can install & use it as a library, or deploy this code as a REST API. For fungible systems, it allows any user with quantifiable Dereva to alias & denominate their own token to sell or freely distribute.
 
 ## Decentralization
 
@@ -22,7 +22,7 @@ Contracts are agreements between participants in a transaction that help enforce
 
 ## Usage
 
-1. The default export of this library is the service module only (built with [`node-service-library`](https://github.com/bennyschmidt/node-service-library). You can include this service in your existing Node.js project, or create a server from scratch by forking [`node-service-core`](https://github.com/bennyschmidt/node-service-core) and installing Dereva (`npm i dereva`).
+1. The default export of this library is the service module only (built with [`node-service-library`](https://github.com/bennyschmidt/node-service-library). You can integrate this HTTP service in your existing Node.js project, or create a server by forking [`node-service-core`](https://github.com/bennyschmidt/node-service-core) and installing Dereva (either fork this API code, or `npm i dereva` in your existing API and call library methods).
 
 2. Add an `.env` file to the root of your directory with the following scaffold:
 

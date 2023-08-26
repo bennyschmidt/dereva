@@ -32,9 +32,9 @@ Contracts are agreements between participants in a transaction that help enforce
 
 Validations are lifecycle hooks that run before a transaction is completed, and their `Boolean` return value determines whether or not the transaction will continue. Currently there are 2 kinds of validations:
 
-**Record**
+**[Record](https://github.com/bennyschmidt/DRV100/blob/master/validations/index.js)**
 
-**Non-Fungible Record**
+**[Non-Fungible Record](https://github.com/bennyschmidt/DRV200/blob/master/validations/index.js)**
 
 ## Usage
 

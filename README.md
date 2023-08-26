@@ -20,8 +20,6 @@ Anyone can create their own token, or their own content protocol, by forking the
 
 Anyone can determine the validity of a transaction against a certain confidence threshold by counting how many instances have validated it versus the total being queried. As more peers run a transaction, confidence is built, and upon a certain threshold determined by the user a transaction may be deemed valid.
 
-When performing a basic balance inquiry or when transferring Dereva to another user, like any other request the values are determined functionally - in other words, calculated at the time it's needed to be across a number of peer instances until the provided confidence threshold is met.
-
 ## Contracts
 
 Contracts are agreements between participants in a transaction that help enforce the protocol. The contract type is specified in the request by it's string name (e.g. `{ contract: "DRV100" }`). Currently there are 2 kinds of contracts:
@@ -29,6 +27,14 @@ Contracts are agreements between participants in a transaction that help enforce
 **[DRV100](https://github.com/bennyschmidt/DRV100) (Record)**
 
 **[DRV200](https://github.com/bennyschmidt/DRV200) (Non-Fungible Record)**
+
+## Validations
+
+Validations are lifecycle hooks that run before a transaction is completed, and their `Boolean` return value determines whether or not the transaction will continue. Currently there are 2 kinds of validations:
+
+**Record**
+
+**Non-Fungible Record**
 
 ## Usage
 
@@ -67,7 +73,7 @@ Instead of the above 3 steps, you can simply clone this [Node.js boilerplate](ht
 
 ## Topics
 
-- [Decentralization](https://github.com/bennyschmidt/drv-core/blob/master/README.md#decentralization)
-- [Contracts](https://github.com/bennyschmidt/drv-core/blob/master/README.md#contracts)
-- [Validations](https://github.com/bennyschmidt/drv-core/blob/master/README.md#validations)
+- [Decentralization](https://github.com/bennyschmidt/dereva/blob/master/README.md#decentralization)
+- [Contracts](https://github.com/bennyschmidt/dereva/blob/master/README.md#contracts)
+- [Validations](https://github.com/bennyschmidt/dereva/blob/master/README.md#validations)
 - [Enforcements](https://github.com/bennyschmidt/drv-core/blob/master/README.md#enforcements)

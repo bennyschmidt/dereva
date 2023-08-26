@@ -32,10 +32,17 @@ Contracts are agreements between participants in a transaction that help enforce
 
 ## Usage
 
-1. The default export of this library is the service module only (built with [`node-service-library`](https://github.com/bennyschmidt/node-service-library). You can integrate this HTTP service in your existing Node.js project, or create a server by forking [`node-service-core`](https://github.com/bennyschmidt/node-service-core) and installing Dereva (either fork this API code, or `npm i dereva` in your existing API and call library methods).
+1a. `npm i dereva` to use it as a library in your existing API.
+
+1b. To create a new public REST API, copy the contents of this repo into your [`node-service-core`](https://github.com/bennyschmidt/node-service-core) project, to `/src/services/my-dereva-api`, and add it to the list of `Services` in `index.js`:
+
+```
+const Services = {
+  "My Dereva API": {} // leave empty
+};
+```
 
 2. Add an `.env` file to the root of your directory with the following scaffold:
-
 
 ```
   DATA_URI=
